@@ -5,8 +5,6 @@
  * This is the addition for https://www.php.net/manual/ru/function.empty.php
  */
 
-namespace Dozer111\PhpAdditionalFunctions;
-
 if (!function_exists('emptiest')) {
     /**
      * Show is the value is really empty

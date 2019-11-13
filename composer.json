@@ -17,7 +17,7 @@
       "src/variables.php"
     ],
     "psr-4": {
-      "Dozer111\\PhpAdditionalFunctions\\": ""
+      "Dozer111\\PhpAdditionalFunctions\\": "src/"
     }
   }
 }
