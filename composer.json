@@ -10,14 +10,17 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "php": ">7.1"
+    "php": ">7.0"
   },
   "autoload": {
     "files": [
       "src/variables.php"
     ],
     "psr-4": {
-      "Dozer111\\PhpAdditionalFunctions\\": "src/"
+      "dozer111\\PhpMoreFunctions\\": "src/"
     }
+  },
+  "require-dev": {
+    "codeception/codeception": "^3.1"
   }
 }
