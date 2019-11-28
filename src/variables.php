@@ -40,6 +40,34 @@ if (!function_exists('emptiest')) {
     }
 }
 
+if(!function_exists('normalized_floatval'))
+{
+    /**
+     * Sometimes, we have boolean value in wrong format:
+     * 123,123213 instead 123.123213
+     *
+     * Because of it we have a couple of problems
+     * floatval(123,123213) => 123.0
+     * yii\i18n\Formatter->normalizeNumericValue('1,5') => InvalidArgumentException
+     *
+     * This function copy logic from floatval(),and add ',' as delimiter
+     */
+    function normalized_floatval($value):float
+    {
+        $value = trim($value);
+        $regex1 = '/^\d+,\d?$/';
+        if (preg_match('/^\d+.*/', $value)) {
+
+            preg_match('/^\d+[,.]\d*/',$value,$matches);
+            $value = str_replace(',','.',$matches[0]);
+
+        }
+
+
+        return floatval($value);
+    }
+}
+
 
 
 
