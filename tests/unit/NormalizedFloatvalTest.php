@@ -32,6 +32,12 @@ class NormalizedFloatvalTest extends Unit
         $this->assertIsFloat($normalizedValue);
         $this->assertSame(123.123,$normalizedValue);
     }
+    public function testOnPastingIntValue(){
+        $intVal = 456;
+        $floatVal = normalized_floatval($intVal);
 
+        $this->assertIsFloat($floatVal);
+        $this->assertSame(456.0,$floatVal);
+    }
 
 }

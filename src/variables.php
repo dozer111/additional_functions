@@ -58,7 +58,7 @@ if(!function_exists('normalized_floatval'))
 
         if (preg_match('/^\d+.*/', $value)) {
 
-            preg_match('/^\d+[,.]\d*/',$value,$matches);
+            preg_match('/^\d+[,.]?\d*/',$value,$matches);
             $value = str_replace(',','.',$matches[0]);
 
         }
