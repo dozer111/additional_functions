@@ -2,6 +2,7 @@
   "name": "dozer111/php_more_functions",
   "description": "More functions to use with php",
   "type": "library",
+  "license": "proprietary",
   "authors": [
     {
       "name": "dozer111",
@@ -14,7 +15,8 @@
   },
   "autoload": {
     "files": [
-      "src/variables.php"
+      "src/variable_and_type_related_extensions/variable_handling.php",
+      "src/textProcessing/strings.php"
     ],
     "psr-4": {
       "dozer111\\PhpMoreFunctions\\": "src/"

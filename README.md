@@ -4,11 +4,8 @@
 Library, which add some new global php functions, or add new functions, 
 which has they`re prototype in pure php  
 
-Functions are defined according to `handle some functionality functions`.  
-```php
-@example https://www.php.net/manual/en/ref.var.php
-@example https://www.php.net/manual/en/ref.filter.php
-```
+**[Full list of funtions](https://github.com/dozer111/additional_functions/wiki/Functions-list)**
+
 
 ### Install/Usage
 ```bash

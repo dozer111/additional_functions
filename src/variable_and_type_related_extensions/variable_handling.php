@@ -1,12 +1,15 @@
 <?php
 
 /**
- * List of custom functions for variables
- * This is the addition for https://www.php.net/manual/ru/function.empty.php
+ * List of custom functions for variable handling functions
+ * @see https://www.php.net/manual/en/book.var.php
+ *
  */
 
 if (!function_exists('emptiest')) {
     /**
+     * Addition for https://www.php.net/manual/ru/function.empty.php
+     *
      * Show is the value is really empty
      * Btw we assume, that $value is exists
      *
