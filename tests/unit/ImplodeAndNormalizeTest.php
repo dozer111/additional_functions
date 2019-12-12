@@ -26,7 +26,7 @@ class ImplodeAndNormalizeTest extends Unit
      * @return void
      * @throws Exception
      */
-    public function testOnNonDuplicatedData()
+    public function testNonDuplicatedData()
     {
         $data = [
             'var/www/test',
@@ -41,7 +41,7 @@ class ImplodeAndNormalizeTest extends Unit
         $this->tester->assertSame($expected, $filePath);
     }
 
-    public function testOnDuplicatedDataWithRemoveStingType()
+    public function testDuplicatedDataWithRemoveStingType()
     {
         $data = [
             'var/www/test/',
@@ -56,7 +56,7 @@ class ImplodeAndNormalizeTest extends Unit
         $this->tester->assertSame($expected, $filePath);
     }
 
-    public function testOnDuplicatedDataWithRemoveArrayType()
+    public function testDuplicatedDataWithRemoveArrayType()
     {
         $data = [
             'var/www/test/',
@@ -71,7 +71,7 @@ class ImplodeAndNormalizeTest extends Unit
         $this->tester->assertSame($expected, $filePath);
     }
 
-    public function testOnDuplicatedDataWithRemoveIntType()
+    public function testDuplicatedDataWithRemoveIntType()
     {
         $data = [
             'var/www/test',
@@ -86,7 +86,7 @@ class ImplodeAndNormalizeTest extends Unit
         $this->tester->assertSame($expected, $filePath);
     }
 
-    public function testOnDuplicatedDataWithInvalidType()
+    public function testDuplicatedDataWithInvalidType()
     {
         $this->expectException(Exception::class);
 
