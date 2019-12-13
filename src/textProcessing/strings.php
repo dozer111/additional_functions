@@ -14,40 +14,42 @@ if (!function_exists('implode_and_normalize')) {
      * Addition for https://www.php.net/manual/en/function.implode.php
      *
      * 1)Join elements in string
-     * 2)remove multiple same characters
+     * 2)remove multiple glue characters
      *
      * Need for situation, when
-     * We have some value after implode
-     * BUT, we also don`t know, does this value contains duplicate symbols:
-     * test1/test2/test3 instead test1//test2/test3
+     * We have some value after implode[1], or concatenation[2]
+     * and there is need to check, that imploded symbol is not duplicated
+     * /test1/test2/test3/test4/test5 instead of /test1//test2/test3/test4//test5
      *
-     * So, sometimes we do something like this
+     *
      * @example
-     * $x = implode([$a,$b,$c,$d]);
-     * OR $x = $a.$b.$c.$d;
+     * $rootPath = dirname(dirname(__DIR__));
+     * $dirPath = SomeObj->getPath();
+     * $file = $user->getImage();
+     * [1] => $fullPath = implode('/',[$rootPath,$dirPath,$file]);
+     * [2] => $fullPath = $rootPath.'/'.$dirPath.'/'.$file;
      *
-     * $x = preg_replace('/\s{2,}/',' ',$x);
+     * #To prevent this we also do
+     * $fullPath = preg_replace('/\s{2,}/',' ',$fullPath);
      *
-     * This function created exactly for this case
+     * #New solution =>
+     * $fullPath = implode_and_normalize('/',[$rootPath,$dirPath,$file]);
+     *
      *
      *
      * @param string $glue
      * @param array $pieces
-     * @param mixed $removeDuplicates
      * @return string
-     * @throws Exception
      */
-    function implode_and_normalize(string $glue,array $pieces,$removeDuplicates): string
+    function implode_and_normalize(string $glue,array $pieces): string
      {
 
          $string = implode($glue,$pieces);
 
 
-         $removeDuplicatesType = gettype($removeDuplicates);
-
-         $removeDuplicatesClosure = function (string $string,string $symbol)
+         $removeDuplicatesClosure = function (string $implodedString,string $duplicateSymbol)
          {
-             $symbolToReplace = $symbol;
+             $symbolToReplace = $duplicateSymbol;
 
              /**
               * @see https://www.regular-expressions.info/characters.html#special
@@ -70,31 +72,16 @@ if (!function_exists('implode_and_normalize')) {
                  '}',
              ];
 
-             if(in_array($symbol,$specialRegexSymbols))
+             if(in_array($duplicateSymbol,$specialRegexSymbols))
              {
-                 $symbol = "\\$symbol";
+                 $duplicateSymbol = "\\$duplicateSymbol";
              }
-             return preg_replace("/{$symbol}{2,}/",$symbolToReplace,$string);
+             return preg_replace("/{$duplicateSymbol}{2,}/",$symbolToReplace,$implodedString);
 
          };
 
 
-         switch ($removeDuplicatesType)
-         {
-             case 'string':
-             case 'integer':
-                return $removeDuplicatesClosure($string,$removeDuplicates);
-             case 'array':
-                 foreach ($removeDuplicates as $duplicateSymbol)
-                 {
-                     $string = $removeDuplicatesClosure($string,$duplicateSymbol);
-                 }
-                 return $string;
-                 break;
-             default:
-                 throw new Exception("\$removeDuplicates cannot be type {$removeDuplicatesType}");
-
-         }
+         return $removeDuplicatesClosure($string,$glue);
 
      }
 
