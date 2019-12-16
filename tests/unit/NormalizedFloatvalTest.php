@@ -19,7 +19,7 @@ class NormalizedFloatvalTest extends Unit
     {
         $value = '123.123asdasdasdads';
 
-        $normalizedValue = normalized_floatval($value);
+        $normalizedValue = normalizeFloatval($value);
 
         $this->assertIsFloat($normalizedValue);
         $this->assertSame(123.123,$normalizedValue);
@@ -27,14 +27,14 @@ class NormalizedFloatvalTest extends Unit
     public function testOnCommaAsDelimiter(){
         $value = '123,123asdasdasdads';
 
-        $normalizedValue = normalized_floatval($value);
+        $normalizedValue = normalizeFloatval($value);
 
         $this->assertIsFloat($normalizedValue);
         $this->assertSame(123.123,$normalizedValue);
     }
     public function testOnPastingIntValue(){
         $intVal = 456;
-        $floatVal = normalized_floatval($intVal);
+        $floatVal = normalizeFloatval($intVal);
 
         $this->assertIsFloat($floatVal);
         $this->assertSame(456.0,$floatVal);

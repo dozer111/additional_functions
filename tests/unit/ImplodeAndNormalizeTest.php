@@ -35,7 +35,7 @@ class ImplodeAndNormalizeTest extends Unit
             'prettyImage123.jpg'
         ];
 
-        $filePath = implode_and_normalize('/', $data);
+        $filePath = normalizeImplode('/', $data);
 
         $expected = 'var/www/test/someDir/system/web/icons/prettyImage123.jpg';
         $this->tester->assertSame($expected, $filePath);
@@ -58,8 +58,8 @@ class ImplodeAndNormalizeTest extends Unit
         ];
 
 
-        $filePath1 = implode_and_normalize('/', $data);
-        $filePath2 = implode_and_normalize('/', $data2);
+        $filePath1 = normalizeImplode('/', $data);
+        $filePath2 = normalizeImplode('/', $data2);
 
 
         $expected = 'var/www/test/someDir/system/web/icons/prettyImage123.jpg';

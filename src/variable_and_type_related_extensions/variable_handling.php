@@ -43,7 +43,7 @@ if (!function_exists('emptiest')) {
     }
 }
 
-if(!function_exists('normalized_floatval'))
+if(!function_exists('normalizeFloatval'))
 {
     /**
      * Sometimes, we have boolean value in wrong format:
@@ -55,7 +55,7 @@ if(!function_exists('normalized_floatval'))
      *
      * This function copy logic from floatval(),and add ',' as delimiter
      */
-    function normalized_floatval($value):float
+    function normalizeFloatval($value):float
     {
         $value = trim($value);
 

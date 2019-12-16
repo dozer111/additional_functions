@@ -7,7 +7,7 @@
  */
 
 
-if (!function_exists('implode_and_normalize')) {
+if (!function_exists('normalizeImplode')) {
 
 
     /**
@@ -22,6 +22,10 @@ if (!function_exists('implode_and_normalize')) {
      * /test1/test2/test3/test4/test5 instead of /test1//test2/test3/test4//test5
      *
      *
+     * @example Same idea from yii2
+     * @see https://www.yiiframework.com/doc/api/2.0/yii-web-urlnormalizer#$collapseSlashes-detail
+     *
+     *
      * @example
      * $rootPath = dirname(dirname(__DIR__));
      * $dirPath = SomeObj->getPath();
@@ -33,7 +37,7 @@ if (!function_exists('implode_and_normalize')) {
      * $fullPath = preg_replace('/\s{2,}/',' ',$fullPath);
      *
      * #New solution =>
-     * $fullPath = implode_and_normalize('/',[$rootPath,$dirPath,$file]);
+     * $fullPath = normalizeImplode('/',[$rootPath,$dirPath,$file]);
      *
      *
      *
@@ -41,7 +45,7 @@ if (!function_exists('implode_and_normalize')) {
      * @param array $pieces
      * @return string
      */
-    function implode_and_normalize(string $glue,array $pieces): string
+    function normalizeImplode(string $glue,array $pieces): string
      {
 
          $string = implode($glue,$pieces);
