@@ -99,6 +99,20 @@ if (!function_exists('truncateNumber')) {
      * Difference is this function don`t round value
      * and give you string value of it
      *
+     * @important
+     * There can be troubles,when u try to past float val with tooMany digits after comma
+     * 123.828282828282828282828
+     * It would be better to work with same values as with sting
+     *
+     *
+     * @example
+     * $number = 123.459278;
+     * $data = truncateNumber($number,2); // 123.45
+     * $data = truncateNumber($number,4); // 123.4592
+     *
+     * @example 2
+     * $number = '123456.1234567890123456789012345678901';
+     * $value = truncateNumber($number,9); // 123456.123456789
      *
      * @param $number
      * @param int $decimals

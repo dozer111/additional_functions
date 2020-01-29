@@ -35,6 +35,12 @@ class TruncateNumberTest extends \Codeception\Test\Unit
             $number = '123456.129951474859';
             $this->assertSame('123456.129951474859',truncateNumber($number,1e15));
 
+
+            $number = '123456.1234567890123456789012345678901';
+            $this->assertSame('123456.123456789',truncateNumber($number,9));
+            $this->assertSame('123456.123456789012',truncateNumber($number,12));
+            $this->assertSame('123456.12345678901234567890',truncateNumber($number,20));
+
             $number2 = 123456.129951474859;
             $this->assertSame('123456.12995147',truncateNumber($number2,1e15));
 
