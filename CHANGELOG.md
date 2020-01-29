@@ -5,4 +5,4 @@
 
 
 ## 2.1.0
-* added `truncateNumber()` function
+* added [truncateNumber()](https://github.com/dozer111/additional_functions/blob/master/src/textProcessing/strings.php#L93) function
