@@ -57,16 +57,7 @@ if(!function_exists('normalizeFloatval'))
      */
     function normalizeFloatval($value):float
     {
-        $value = trim($value);
-
-        if (preg_match('/^\d+.*/', $value)) {
-
-            preg_match('/^\d+[,.]?\d*/',$value,$matches);
-            $value = str_replace(',','.',$matches[0]);
-
-        }
-
-
+        $value = truncateNumber($value,1e9);
         return floatval($value);
     }
 }

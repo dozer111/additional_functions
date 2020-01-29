@@ -1,6 +1,0 @@
-language: php
-php:
-  - 7.0
-script:
-  # Run tests if $FRAMEWORK is not empty
-  - './vendor/bin/codecept run unit'

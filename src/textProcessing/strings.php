@@ -22,6 +22,9 @@ if (!function_exists('normalizeImplode')) {
      * /test1/test2/test3/test4/test5 instead of /test1//test2/test3/test4//test5
      *
      *
+     * @param string $glue
+     * @param array $pieces
+     * @return string
      * @example Same idea from yii2
      * @see https://www.yiiframework.com/doc/api/2.0/yii-web-urlnormalizer#$collapseSlashes-detail
      *
@@ -41,53 +44,94 @@ if (!function_exists('normalizeImplode')) {
      *
      *
      *
-     * @param string $glue
-     * @param array $pieces
-     * @return string
      */
-    function normalizeImplode(string $glue,array $pieces): string
-     {
+    function normalizeImplode(string $glue, array $pieces): string
+    {
 
-         $string = implode($glue,$pieces);
-
-
-         $removeDuplicatesClosure = function (string $implodedString,string $duplicateSymbol)
-         {
-             $symbolToReplace = $duplicateSymbol;
-
-             /**
-              * @see https://www.regular-expressions.info/characters.html#special
-              */
-             $specialRegexSymbols = [
-                 '[',
-                 ']',
-                 '\\',
-                 '/',
-                 '^',
-                 '$',
-                 '.',
-                 '|',
-                 '?',
-                 '*',
-                 '+',
-                 '(',
-                 ')',
-                 '{',
-                 '}',
-             ];
-
-             if(in_array($duplicateSymbol,$specialRegexSymbols))
-             {
-                 $duplicateSymbol = "\\$duplicateSymbol";
-             }
-             return preg_replace("/{$duplicateSymbol}{2,}/",$symbolToReplace,$implodedString);
-
-         };
+        $string = implode($glue, $pieces);
 
 
-         return $removeDuplicatesClosure($string,$glue);
+        $removeDuplicatesClosure = function (string $implodedString, string $duplicateSymbol) {
+            $symbolToReplace = $duplicateSymbol;
 
-     }
+            /**
+             * @see https://www.regular-expressions.info/characters.html#special
+             */
+            $specialRegexSymbols = [
+                '[',
+                ']',
+                '\\',
+                '/',
+                '^',
+                '$',
+                '.',
+                '|',
+                '?',
+                '*',
+                '+',
+                '(',
+                ')',
+                '{',
+                '}',
+            ];
+
+            if (in_array($duplicateSymbol, $specialRegexSymbols)) {
+                $duplicateSymbol = "\\$duplicateSymbol";
+            }
+            return preg_replace("/{$duplicateSymbol}{2,}/", $symbolToReplace, $implodedString);
+
+        };
+
+
+        return $removeDuplicatesClosure($string, $glue);
+
+    }
 
 
 }
+
+if (!function_exists('truncateNumber')) {
+
+    /**
+     * Same logic as
+     * @see https://www.php.net/manual/en/function.number-format
+     *
+     * Difference is this function don`t round value
+     * and give you string value of it
+     *
+     *
+     * @param $number
+     * @param int $decimals
+     * @return string
+     */
+    function truncateNumber($number, int $decimals = 0):string
+    {
+        if (preg_match('/^\d+.*/', $number)) {
+
+            preg_match('/^\d+[,.]?\d*/', $number, $matches);
+            $number = str_replace(',', '.', $matches[0]);
+
+        } else {
+            throw new InvalidArgumentException('$number must be numeric!');
+        }
+
+
+        $decimals = abs($decimals);
+
+        /**
+         * @see https://www.php.net/manual/en/regexp.reference.repetition.php
+         */
+        $pregMatchLimit = 65535;
+        $decimals = ($decimals > $pregMatchLimit) ? $pregMatchLimit : $decimals;
+        $pattern = ($decimals > 0) ? "/^\d+(\.\d{1,$decimals})?/" : "/^\d+/";
+
+        preg_match($pattern, $number, $matches);
+
+        return $matches[0];
+    }
+
+}
+
+
+
+

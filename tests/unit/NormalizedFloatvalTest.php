@@ -40,8 +40,20 @@ class NormalizedFloatvalTest extends Unit
         $this->assertSame(456.0,$floatVal);
     }
 
-    public function testFake(){
-        $this->assertSame(1,2);
+    public function testOnPasteInvalidData()
+    {
+        $invalidData = [
+            'this is some string',
+        ];
+
+
+        foreach ($invalidData as $testCase)
+        {
+            $this->expectException(InvalidArgumentException::class);
+            normalizeFloatval($testCase);
+        }
+
+
     }
 
 }
