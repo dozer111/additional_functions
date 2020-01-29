@@ -98,9 +98,12 @@ if (!function_exists('truncateNumber')) {
      *
      * Difference is this function don`t round value
      * and give you string value of it
+     * or null, if you paste real empty value
+     *
+     *
      *
      * @important
-     * There can be troubles,when u try to past float val with tooMany digits after comma
+     * There can be troubles,when u try to paste float val with tooMany digits after comma
      * 123.828282828282828282828
      * It would be better to work with same values as with sting
      *
@@ -116,16 +119,20 @@ if (!function_exists('truncateNumber')) {
      *
      * @param $number
      * @param int $decimals
-     * @return string
+     * @return string|null
      */
-    function truncateNumber($number, int $decimals = 0):string
+    function truncateNumber($number, int $decimals = 0):?string
     {
+        if(emptiest($number))
+            return null;
+
         if (preg_match('/^\d+.*/', $number)) {
 
             preg_match('/^\d+[,.]?\d*/', $number, $matches);
             $number = str_replace(',', '.', $matches[0]);
 
-        } else {
+        }else
+        {
             throw new InvalidArgumentException('$number must be numeric!');
         }
 

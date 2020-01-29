@@ -66,6 +66,17 @@ class TruncateNumberTest extends \Codeception\Test\Unit
         });
     }
 
+    public function testDataEmpty()
+    {
+        $emptyData = [
+            '',
+            null
+        ];
 
+        foreach ($emptyData as $testCaseData)
+        {
+            $this->assertSame(null,truncateNumber($testCaseData));
+        }
+    }
 
 }
