@@ -18,6 +18,7 @@ if (!function_exists('emptiest')) {
      * 2) empty array
      * 3) empty string
      *
+     * @covers EmptiestTest
      * @param $value
      * @return bool
      */
@@ -54,6 +55,10 @@ if(!function_exists('normalizeFloatval'))
      * yii\i18n\Formatter->normalizeNumericValue('1,5') => InvalidArgumentException
      *
      * This function copy logic from floatval(),and add ',' as delimiter
+     *
+     * @covers NormalizedFloatvalTest
+     * @param $value
+     * @return float
      */
     function normalizeFloatval($value):float
     {
@@ -65,7 +70,35 @@ if(!function_exists('normalizeFloatval'))
 
 
 
+if(!function_exists('toArray'))
+{
 
+    /**
+     * Give the $value,
+     * and if it`s not an array
+     *      => wrap to array
+     *
+     * Difference of this function, and (array)$smth,
+     * is that i just wrap, and do nothing specific with value
+     * @see https://gist.github.com/dozer111/916283f6ff7f93b63532bd91cc026002
+     *
+     *
+     * @example
+     * $from = $data->from; // string|array
+     * $from2 = toArray($data->from); // 100% array
+     *
+     * @covers ToArrayTest
+     * @param $value
+     * @return array
+     */
+    function toArray($value):array
+    {
+        return (is_array($value))
+            ? $value
+            : [$value];
+    }
+
+}
 
 
 
