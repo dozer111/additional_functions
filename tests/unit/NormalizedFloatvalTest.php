@@ -1,5 +1,6 @@
 <?php
 
+use Codeception\Specify;
 use Codeception\Test\Unit;
 
 /**
@@ -15,29 +16,71 @@ class NormalizedFloatvalTest extends Unit
      */
     protected $tester;
 
+    use Specify;
+
     public function testOnDotAsDelimiter()
     {
-        $value = '123.123asdasdasdads';
 
-        $normalizedValue = normalizeFloatval($value);
 
-        $this->assertIsFloat($normalizedValue);
-        $this->assertSame(123.123,$normalizedValue);
+        $this->specify('test on positive value',function (){
+            $value = '123.123asdasdasdads';
+
+            $normalizedValue = normalizeFloatval($value);
+
+            $this->assertIsFloat($normalizedValue);
+            $this->assertSame(123.123,$normalizedValue);
+        });
+        $this->specify('test on negative value',function (){
+            $value = '-123.123asdasdasdads';
+
+            $normalizedValue = normalizeFloatval($value);
+
+            $this->assertIsFloat($normalizedValue);
+            $this->assertSame(-123.123,$normalizedValue);
+        });
+
+
     }
     public function testOnCommaAsDelimiter(){
-        $value = '123,123asdasdasdads';
+        $this->specify('test on positive value',function (){
+            $value = '123,123asdasdasdads';
 
-        $normalizedValue = normalizeFloatval($value);
+            $normalizedValue = normalizeFloatval($value);
 
-        $this->assertIsFloat($normalizedValue);
-        $this->assertSame(123.123,$normalizedValue);
+            $this->assertIsFloat($normalizedValue);
+            $this->assertSame(123.123,$normalizedValue);
+        });
+
+        $this->specify('test on negative value',function (){
+            $value2 = '-123,123asdasdasdads';
+            $normalizedValue2 = normalizeFloatval($value2);
+
+            $this->assertIsFloat($normalizedValue2);
+            $this->assertSame(-123.123,$normalizedValue2);
+        });
+
     }
     public function testOnPastingIntValue(){
-        $intVal = 456;
-        $floatVal = normalizeFloatval($intVal);
+        $this->specify('test on positive value',function (){
+            $intVal = 456;
+            $floatVal = normalizeFloatval($intVal);
 
-        $this->assertIsFloat($floatVal);
-        $this->assertSame(456.0,$floatVal);
+            $this->assertIsFloat($floatVal);
+            $this->assertSame(456.0,$floatVal);
+        });
+        $this->specify('test on negative value',function (){
+            $intVal2 = -456;
+            $floatVal2 = normalizeFloatval($intVal2);
+
+            $this->assertIsFloat($floatVal2);
+            $this->assertSame(-456.0,$floatVal2);
+        });
+
+
+
+
+
+
     }
 
     public function testOnPasteInvalidData()

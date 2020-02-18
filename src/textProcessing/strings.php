@@ -126,9 +126,9 @@ if (!function_exists('truncateNumber')) {
         if(emptiest($number))
             return null;
 
-        if (preg_match('/^\d+.*/', $number)) {
+        if (preg_match('/^-?\d+.*/', $number)) {
 
-            preg_match('/^\d+[,.]?\d*/', $number, $matches);
+            preg_match('/^-?\d+[,.]?\d*/', $number, $matches);
             $number = str_replace(',', '.', $matches[0]);
 
         }else
@@ -144,7 +144,7 @@ if (!function_exists('truncateNumber')) {
          */
         $pregMatchLimit = 65535;
         $decimals = ($decimals > $pregMatchLimit) ? $pregMatchLimit : $decimals;
-        $pattern = ($decimals > 0) ? "/^\d+(\.\d{1,$decimals})?/" : "/^\d+/";
+        $pattern = ($decimals > 0) ? "/^-?\d+(\.\d{1,$decimals})?/" : "/^-?\d+/";
 
         preg_match($pattern, $number, $matches);
 
