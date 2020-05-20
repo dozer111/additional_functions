@@ -146,9 +146,9 @@ if (!function_exists('truncateNumber')) {
         $pregMatchLimit = 65535;
         $decimals = ($decimals > $pregMatchLimit) ? $pregMatchLimit : $decimals;
         /**
-         * @see https://regex101.com/r/m42H7h/1
+         * @see https://regex101.com/r/xcMNvx/1
          */
-        $findE = preg_match('/^-?\d+[,.]?\d*(?<e>e-?\d+)?/',$number,$matches);
+        preg_match('/^-?\d+[,.]?\d*(?<e>e-?\d+)?/i',$number,$matches);
         $e = $matches['e'] ?? '';
 
         $pattern = ($decimals > 0) ? "/^-?\d+(\.\d{1,$decimals})?/" : "/^-?\d+/";

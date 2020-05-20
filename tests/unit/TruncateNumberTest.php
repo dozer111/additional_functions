@@ -25,8 +25,13 @@ class TruncateNumberTest extends \Codeception\Test\Unit
     {
         $testInt = 123456;
         $testFloat = 123456.129951474859;
+
         $testFloatWithE = '123456.129951474859e7';
         $testFloatWithEMinus = '123456.129951474859e-7';
+
+        $testFloatWithBigE = '123456.129951474859E7';
+        $testFloatWithBigEMinus = '123456.129951474859E-7';
+
         $testFloatWithEAsFloat = 123456.129951474859e3;
         $tooBigDecAsString = '123456.1234567890123456789012345678901';
         $tooBigDecAsStringWithE = '123456.1234567890123456789012345678901e4';
@@ -44,6 +49,16 @@ class TruncateNumberTest extends \Codeception\Test\Unit
             'test on float with e 11' =>[$testFloatWithEMinus,'123456.12e-7',2],
             'test on float with e 12' =>[$testFloatWithEMinus,'123456.1299e-7',4],
             'test on float with e 13' =>[$testFloatWithEMinus,'123456.12995e-7',5],
+
+
+            'test on float with big e 1' =>[$testFloatWithBigE,'123456.12E7',2],
+            'test on float with big e 2' =>[$testFloatWithBigE,'123456.1299E7',4],
+            'test on float with big e 3' =>[$testFloatWithBigE,'123456.12995E7',5],
+            'test on float with big e 11' =>[$testFloatWithBigEMinus,'123456.12E-7',2],
+            'test on float with big e 12' =>[$testFloatWithBigEMinus,'123456.1299E-7',4],
+            'test on float with big e 13' =>[$testFloatWithBigEMinus,'123456.12995E-7',5],
+
+
 
 
             'test on float with sting in end 1' => ['12.75 HP left','12',0],
