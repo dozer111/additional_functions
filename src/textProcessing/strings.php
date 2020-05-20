@@ -123,13 +123,14 @@ if (!function_exists('truncateNumber')) {
      */
     function truncateNumber($number, int $decimals = 0):?string
     {
+
         if(emptiest($number))
             return null;
 
         if (preg_match('/^-?\d+.*/', $number)) {
 
             preg_match('/^-?\d+[,.]?\d*/', $number, $matches);
-            $number = str_replace(',', '.', $matches[0]);
+            $numberChanged = str_replace(',', '.', $matches[0]);
 
         }else
         {
@@ -144,11 +145,19 @@ if (!function_exists('truncateNumber')) {
          */
         $pregMatchLimit = 65535;
         $decimals = ($decimals > $pregMatchLimit) ? $pregMatchLimit : $decimals;
+        /**
+         * @see https://regex101.com/r/m42H7h/1
+         */
+        $findE = preg_match('/^-?\d+[,.]?\d*(?<e>e-?\d+)?/',$number,$matches);
+        $e = $matches['e'] ?? '';
+
         $pattern = ($decimals > 0) ? "/^-?\d+(\.\d{1,$decimals})?/" : "/^-?\d+/";
+        preg_match($pattern, $numberChanged, $matches);
 
-        preg_match($pattern, $number, $matches);
+        $numberWithE = $matches[0].$e;
 
-        return $matches[0];
+
+        return $numberWithE;
     }
 
 }

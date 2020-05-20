@@ -9,46 +9,65 @@ class TruncateNumberTest extends \Codeception\Test\Unit
     use \Codeception\Specify;
 
 
-    public function testDataValid()
+    /**
+     * @dataProvider dataValid
+     * @param $input
+     * @param $expected
+     * @param $decimals
+     * @return void
+     */
+    public function testDataValid($input,$expected,$decimals)
     {
-        $this->specify('test on int',function(){
-            $number = 123456;
-            $this->assertSame(strval($number),truncateNumber($number));
-        });
-
-        $this->specify('test on float',function(){
-            $number = 123456.129951474859;
-            $this->assertSame('123456.12',truncateNumber($number,2));
-            $this->assertSame('123456.1299',truncateNumber($number,4));
-            $this->assertSame('123456.12995',truncateNumber($number,5));
-        });
-
-        $this->specify('test on float with sting in end',function(){
-            $number = '12.75 HP left';
-            $this->assertSame('12',truncateNumber($number));
-            $this->assertSame('12.75',truncateNumber($number,2));
-
-        });
-
-
-        $this->specify('test on too big decimal value',function(){
-            $number = '123456.129951474859';
-            $this->assertSame('123456.129951474859',truncateNumber($number,1e15));
-
-
-            $number = '123456.1234567890123456789012345678901';
-            $this->assertSame('123456.123456789',truncateNumber($number,9));
-            $this->assertSame('123456.123456789012',truncateNumber($number,12));
-            $this->assertSame('123456.12345678901234567890',truncateNumber($number,20));
-
-            $number2 = 123456.129951474859;
-            $this->assertSame('123456.12995147',truncateNumber($number2,1e15));
-
-        });
-
-
-
+        expect(truncateNumber($input,$decimals))->same($expected);
     }
+
+    public function dataValid()
+    {
+        $testInt = 123456;
+        $testFloat = 123456.129951474859;
+        $testFloatWithE = '123456.129951474859e7';
+        $testFloatWithEMinus = '123456.129951474859e-7';
+        $testFloatWithEAsFloat = 123456.129951474859e3;
+        $tooBigDecAsString = '123456.1234567890123456789012345678901';
+        $tooBigDecAsStringWithE = '123456.1234567890123456789012345678901e4';
+        // input,expected,decimals
+        return [
+            'test on int' => [$testInt,strval($testInt),0],
+
+            'test on float 1' => [$testFloat,'123456.12',2],
+            'test on float 2' =>[$testFloat,'123456.1299',4],
+            'test on float 3' =>[$testFloat,'123456.12995',5],
+
+            'test on float with e 1' =>[$testFloatWithE,'123456.12e7',2],
+            'test on float with e 2' =>[$testFloatWithE,'123456.1299e7',4],
+            'test on float with e 3' =>[$testFloatWithE,'123456.12995e7',5],
+            'test on float with e 11' =>[$testFloatWithEMinus,'123456.12e-7',2],
+            'test on float with e 12' =>[$testFloatWithEMinus,'123456.1299e-7',4],
+            'test on float with e 13' =>[$testFloatWithEMinus,'123456.12995e-7',5],
+
+
+            'test on float with sting in end 1' => ['12.75 HP left','12',0],
+            'test on float with sting in end 2' => ['12.75 HP left','12.75',2],
+
+            'test on too big decimal value 1' => ['123456.129951474859','123456.129951474859',1e15],
+            'test on too big decimal value 2' => [$tooBigDecAsString,'123456.123456789',9],
+            'test on too big decimal value 3' => [$tooBigDecAsString,'123456.123456789012',12],
+            'test on too big decimal value 4' => [$tooBigDecAsString,'123456.12345678901234567890',20],
+            'test on too big decimal value 5' => [123456.129951474859,'123456.12995147',1e15],
+
+            'test on too big decimal value with e 1' => ['123456.129951474859e3','123456.129951474859e3',1e15],
+            'test on too big decimal value with e 2' => [$tooBigDecAsStringWithE,'123456.123456789e4',9],
+            'test on too big decimal value with e 3' => [$tooBigDecAsStringWithE,'123456.123456789012e4',12],
+            'test on too big decimal value with e 4' => [$tooBigDecAsStringWithE,'123456.12345678901234567890e4',20],
+            'test on too big decimal value with e 5' => ['123456.129951474859e5','123456.129951474859e5',1e15],
+
+            'test on too big decimal value with e as float 1' => [$testFloatWithEAsFloat,'123456129.95',2],
+            'test on too big decimal value with e as float 2' => [$testFloatWithEAsFloat,'123456129.9514',4],
+        ];
+    }
+
+
+
 
 
     public function testDataInvalid()
